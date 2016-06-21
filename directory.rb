@@ -1,3 +1,4 @@
+student_count = 11
 puts
 puts "The students of The Villains Academy"
 puts
@@ -14,3 +15,4 @@ puts 'The Joker'
 puts 'Joffrey Baratheon'
 puts 'Norman Bates'
 puts
+puts "Overall we have #{student_count} great students"
