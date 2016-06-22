@@ -10,11 +10,11 @@ def input_names
   end
 students
 end
-# def print_header
-#   puts "The students of The Villains Academy"
-#   puts "____________________________________"
-#   puts
-# end
+def print_header
+  puts "The students of The Villains Academy"
+  puts "____________________________________"
+  puts
+end
 
 def print_students(students)
   puts "Please enter the letter to only print the students whose name begins with that letter"
@@ -22,21 +22,25 @@ def print_students(students)
   letter = gets.chomp.downcase
   puts "The students of The Villains Academy"
   puts "____________________________________"
-  puts
-  students.each.with_index do |entry, i|
-    if entry[:name].length < 12
-    if  entry[:name].start_with?(letter)
-    puts "#{i+1}. #{entry[:name]} (#{entry[:cohort]} cohort)"
+index = 0
+count = students.length
+until index == count
+  if students[index][:name].length < 12
+     if  students[index][:name].start_with?(letter)
+     puts "#{index+1}. #{students[index][:name]} (#{students[index][:cohort]} cohort)"
+end
+end
+index +=1
   end
+
 end
-end
-end
+
 
 def print_footer(students)
 puts "Overall we have #{students.count} great students"
 puts
 end
-# print_header
+print_header
 students = input_names
 print_students(students)
 print_footer(students)
