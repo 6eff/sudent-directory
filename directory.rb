@@ -3,8 +3,11 @@ def input_names
   puts "To finish, hit enter twice"
   students = []
   names = gets.chomp
+  names_cohort = names.split("/")
+  h = {:name => names_cohort[0], :cohort => names_cohort[1] || :november}
+
   while !names.empty? do
-    students << {name: names, cohort: :november}
+    students << {name: h[:name], cohort: h[:cohort]}
     puts "You've entered #{students.count} students"
     names = gets.chomp
   end
