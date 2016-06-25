@@ -23,7 +23,7 @@ def input_names
   students
 end
 def input_hobby_country_name(students)
-  puts "Please enter hobby for each of sutdents"
+  puts "Please enter hobby for each of sutdents, hit enter after last one"
   index = 0
   puts "Let's start with #{students[0][:name]}, what's his hobby?"
   hobby = gets.chomp
@@ -35,11 +35,13 @@ def input_hobby_country_name(students)
     students[index].store(:hobby, hobby)
     if index < students.length - 1
      puts "Let's enter #{students[index + 1][:name]}'s hobby"
+   else
+     break
     end
     hobby = gets.chomp
     index += 1
   end
-  puts "Please enter contry of birth for each student"
+  puts "Please enter contry of birth for each student, hit enter after last one"
   puts "Let's start with #{students[0][:name]}, where he/she was born?"
   index = 0
   country = gets.chomp
@@ -50,12 +52,14 @@ def input_hobby_country_name(students)
     end
     students[index].store(:country, country)
     if index < students.length - 1
-    puts "Let's enter #{students[index - 1][:name]}'s country"
+    puts "Let's enter #{students[index + 1][:name]}'s country"
+  else
+    break
   end
     index += 1
     country = gets.chomp
   end
-  puts "Please enter height for each student"
+  puts "Please enter height for each student, hit enter after last one"
   puts "Let's start with #{students[0][:name]}'s height"
   height = gets.chomp
   index = 0
@@ -67,11 +71,13 @@ def input_hobby_country_name(students)
     students[index].store(:height, height)
     if index < students.length - 1
     puts "Let's enter #{students[index + 1][:name]}'s height"
+  else
+    break
   end
     index += 1
     height = gets.chomp
   end
-   students
+  students
 end
 
 # def print_header
@@ -88,6 +94,7 @@ def print_students(students)
   puts "____________________________________"
   index = 0
   count = students.length
+  # p students.sort_by[:cohort]
   until index == count
     if students[index][:name].length < 12
       if  students[index][:name].start_with?(letter)
