@@ -2,7 +2,8 @@ def input_names
   puts "Please enter each student name and cohort in name/cohort format."
   puts "To finish, hit enter twice"
   students = []
-  names = gets.chomp
+  names = gets
+  names.delete! "\n"
   while names == ""
     puts "Enter at least one student"
     names = gets.chomp
@@ -109,8 +110,13 @@ end
 
 
 def print_footer(students)
+  if students.count > 1
+  puts "Overall we have #{students.count} great student"
+  puts
+else
   puts "Overall we have #{students.count} great students"
   puts
+end
 end
 students = input_names
 input_hobby_country_name(students)
