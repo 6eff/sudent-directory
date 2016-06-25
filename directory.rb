@@ -94,7 +94,7 @@ def print_students(students)
   puts "____________________________________"
   index = 0
   count = students.length
-  # p students.sort_by[:cohort]
+  students.sort_by!{|x| x[:cohort]}
   until index == count
     if students[index][:name].length < 12
       if  students[index][:name].start_with?(letter)
