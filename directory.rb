@@ -4,10 +4,10 @@ def input_names
   students = []
   names = gets
   names.delete! "\n"
-  while names == ""
-    puts "Enter at least one student"
-    names = gets.chomp
-  end
+  # while names == ""
+  #   puts "Enter at least one student"
+  #   names = gets.chomp
+  # end
   names_cohort = names.split("/")
   while !names.empty? do
     while !["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december", nil].include?(names_cohort[1]) do
@@ -24,6 +24,9 @@ def input_names
   students
 end
 def input_hobby_country_name(students)
+  if students == []
+    exit
+  else
   puts "Please enter hobby for each of sutdents, hit enter after last one"
   index = 0
   puts "Let's start with #{students[0][:name]}, what's his hobby?"
@@ -79,6 +82,7 @@ def input_hobby_country_name(students)
     height = gets.chomp
   end
   students
+end
 end
 
 # def print_header
