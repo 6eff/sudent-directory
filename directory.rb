@@ -1,15 +1,24 @@
 def input_names
-  puts "Please enter each student name"
+  puts "Please enter each student name and cohort in name/cohort format."
   puts "To finish, hit enter twice"
   students = []
   names = gets.chomp
-  names_cohort = names.split("/")
-  h = {:name => names_cohort[0], :cohort => names_cohort[1] || :november}
-
-  while !names.empty? do
-    students << {name: h[:name], cohort: h[:cohort]}
-    puts "You've entered #{students.count} students"
+  while names == ""
+    puts "Enter at least one student"
     names = gets.chomp
+  end
+  names_cohort = names.split("/")
+  while !names.empty? do
+    while !["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december", nil].include?(names_cohort[1]) do
+      puts "Misstype in cohort name"
+      names = gets.chomp
+      names_cohort = names.split("/")
+    end
+      h = {:name => names_cohort[0], :cohort => names_cohort[1] || :november}
+      students << {name: h[:name], cohort: h[:cohort].downcase.to_sym}
+      puts "You've entered #{students.count} students"
+      names = gets.chomp
+      names_cohort = names.split("/")
   end
   students
 end
@@ -18,57 +27,51 @@ def input_hobby_country_name(students)
   index = 0
   puts "Let's start with #{students[0][:name]}, what's his hobby?"
   hobby = gets.chomp
-  until index == students.length - 1 do
+  until index == students.length   do
     while hobby == "" do
-      puts "Please enter hobby, or 'unknown'"
-      hobby = gets.chomp
+    puts "Please enter hobby or 'unknown'"
+    hobby = gets.chomp
     end
     students[index].store(:hobby, hobby)
-    puts "Let's enter #{students[index + 1][:name]}'s hobby"
-    index += 1
-    hobby = gets.chomp
-    while hobby == "" do
-      puts "Please enter hobby, or 'unknown'"
-      hobby = gets.chomp
+    if index < students.length - 1
+     puts "Let's enter #{students[index + 1][:name]}'s hobby"
     end
+    hobby = gets.chomp
+    index += 1
   end
   puts "Please enter contry of birth for each student"
   puts "Let's start with #{students[0][:name]}, where he/she was born?"
   index = 0
   country = gets.chomp
-  until index == students.length - 1 do
+  until index == students.length do
     while country == "" do
       puts "Please enter country of birth, or 'unknown'"
       country = gets.chomp
     end
     students[index].store(:country, country)
-    puts "Let's enter #{students[index + 1][:name]}'s country"
+    if index < students.length - 1
+    puts "Let's enter #{students[index - 1][:name]}'s country"
+  end
     index += 1
     country = gets.chomp
-    while country == "" do
-      puts "Please enter country of birth, or 'unknown'"
-      country = gets.chomp
-    end
   end
   puts "Please enter height for each student"
   puts "Let's start with #{students[0][:name]}'s height"
   height = gets.chomp
   index = 0
-  until index == students.length - 1 do
+  until index == students.length do
     while height == "" do
       puts "Please enter height, or 'unknown'"
       height = gets.chomp
     end
     students[index].store(:height, height)
+    if index < students.length - 1
     puts "Let's enter #{students[index + 1][:name]}'s height"
+  end
     index += 1
     height = gets.chomp
-    while height == "" do
-      puts "Please enter height, or 'unknown'"
-      height = gets.chomp
-    end
   end
-  p students
+   students
 end
 
 # def print_header
@@ -89,7 +92,7 @@ def print_students(students)
     if students[index][:name].length < 12
       if  students[index][:name].start_with?(letter)
         string = "#{index+1}. #{students[index][:name]} (#{students[index][:cohort]} cohort)"
-       puts string.center(string.length() +10)
+        puts string.center(string.length() +10)
       end
     end
     index +=1
