@@ -85,12 +85,6 @@ def input_hobby_country_name(students)
 end
 end
 
-# def print_header
-#   puts "The students of The Villains Academy"
-#   puts "____________________________________"
-#   puts
-# end
-
 def print_students(students)
   if students == []
   puts "List is empty, input students" and return
