@@ -122,7 +122,3 @@ else
   puts
 end
 end
-students = input_names
-input_hobby_country_name(students)
-print_students(students)
-print_footer(students)
