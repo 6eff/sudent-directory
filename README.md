@@ -3,5 +3,5 @@ The student-directory script allows you to manage list of students enrolled at V
 
 ## how to use ##
 ```shell
-ruby directory.rb
+ruby menu.rb
 ```
