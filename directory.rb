@@ -92,6 +92,9 @@ end
 # end
 
 def print_students(students)
+  if students == []
+  puts "List is empty, input students" and return
+  else
   puts "Please enter the letter to only print the students whose name begins with that letter"
   puts "Only names shorter then 12 charcters will be printed out"
   letter = gets.chomp.downcase
@@ -109,16 +112,20 @@ def print_students(students)
     end
     index +=1
   end
-
+end
 end
 
 
 def print_footer(students)
+  if students == []
+    return
+  else
   if students.count > 1
   puts "Overall we have #{students.count} great student"
   puts
 else
   puts "Overall we have #{students.count} great students"
   puts
+end
 end
 end
