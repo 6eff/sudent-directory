@@ -1,13 +1,9 @@
+@students =[]
 def input_names
   puts "Please enter each student name and cohort in name/cohort format."
   puts "To finish, hit enter twice"
-  students = []
   names = STDIN.gets
   names.delete! "\n"
-  # while names == ""
-  #   puts "Enter at least one student"
-  #   names = STDIN.STDIN.gets.chomp
-  # end
   names_cohort = names.split("/")
   while !names.empty? do
     while !["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december", nil].include?(names_cohort[1]) do
@@ -15,13 +11,12 @@ def input_names
       names = STDIN.gets.chomp
       names_cohort = names.split("/")
     end
-      h = {:name => names_cohort[0], :cohort => names_cohort[1] || :november}
-      students << {name: h[:name], cohort: h[:cohort].downcase.to_sym}
-      puts "You've entered #{students.count} students"
+      add_students(names_cohort[0], names_cohort[1])
+      puts "You've entered #{@students.count} students"
       names = STDIN.gets.chomp
       names_cohort = names.split("/")
   end
-  students
+  @students
 end
 def input_hobby_country_name(students)
   if students == []
@@ -108,8 +103,6 @@ def print_students(students)
   end
 end
 end
-
-
 def print_footer(students)
   if students == []
     return
@@ -123,3 +116,111 @@ else
 end
 end
 end
+def print_menu
+  # 1. print menu
+  puts "1. Input sudents"
+  puts "2. Print students"
+  puts "3. Save students to a csv file"
+  puts "4. Load students list from csv file"
+  puts "9. Exit" # will add some more
+end
+def input_students
+  # input students
+  @students = input_names
+  input_hobby_country_name(@students)
+end
+def show_students
+  # show students
+  print_students(@students)
+  print_footer(@students)
+end
+def process_selection(selection)
+  # 2. ask for user input
+  # 3. do what user asked
+  case selection
+  when "1"
+  input_students
+  when "2"
+  show_students
+  when "3"
+    print_list_to_file
+  when "4"
+    load_students
+  when "9"
+    puts "Good buy!"
+    exit #program terminates
+  else
+    puts "I don't understand, please repeat"
+  end
+end
+def print_list_to_file
+  puts "Please enter name of the file where data will be saved"
+  filename = STDIN.gets.chomp + ".csv"
+  file = File.open(filename, "w")
+  @students.each do |student|
+    students_data = [student[:name], student[:cohort], student[:hobby], student[:country], student[:height]]
+    data_line = students_data.join(",")
+    file.puts data_line
+  end
+  puts "Successfully saved data to #{filename}"
+  puts
+  file.close
+end
+def add_students(name, cohort)
+  if cohort.nil?
+    @students << {name: name, cohort: :november}
+else
+  @students << {name: name, cohort: cohort.to_sym}
+end
+end
+def load_students(filename = nil)
+  if filename.nil?
+  puts "Choose file from the list, type and hit enter"
+  puts "_____________________________________________"
+  Dir.glob('/Users/julia/RUBY/test/student-directory/*.csv') do |file|
+    puts File.basename(file).chomp('.csv')
+  end
+  filename = STDIN.gets.chomp + ".csv"
+  while !File.exist?(filename)
+  puts "Please check that you've entered correct file name"
+  filename = STDIN.gets.chomp + ".csv"
+  end
+  file = File.open(filename, "r")
+  file.readlines.each do |line|
+    name, cohort = line.chomp.split(',')
+    add_students(name, cohort)
+  end
+  puts "Successfully loaded #{@students.count} from #{filename}"
+  file.close
+else
+  file = File.open(filename, "r")
+  file.readlines.each do |line|
+    name, cohort = line.chomp.split(',')
+    add_students(name, cohort)
+  end
+  puts "Successfully loaded #{@students.count} from #{filename}"
+  file.close
+end
+end
+def try_load_students
+  filename = ARGV.first# first argument from the command line
+    # load_students and return if filename.nil? # get out of the method if it isn't given
+if filename.nil?
+   return
+else
+    if File.exists?(filename + ".csv") # if it exists
+      load_students(filename + ".csv")
+    else # if it doesn't exist
+      puts "Sorry, #{filename} doesn't exist."
+      exit # quit the program
+    end
+  end
+end
+def interactive_menu
+loop do
+  print_menu
+  process_selection(STDIN.gets.chomp)
+end
+end
+try_load_students
+interactive_menu
