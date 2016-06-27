@@ -119,7 +119,7 @@ end
 end
 def print_menu
   # 1. print menu
-  
+
   puts "1. Input sudents"
   puts "2. Print students"
   puts "3. Save students to a csv file"
@@ -218,4 +218,3 @@ end
 end
 try_load_students
 interactive_menu
-lambda { |s| puts s + s.dump }.call "lambda { |s| puts s + s.dump }.call "
