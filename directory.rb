@@ -156,15 +156,11 @@ end
 def print_list_to_file
   puts "Please enter name of the file where data will be saved"
   filename = STDIN.gets.chomp + ".csv"
-  file = File.open(filename, "w")
-  @students.each do |student|
-    students_data = [student[:name], student[:cohort], student[:hobby], student[:country], student[:height]]
-    data_line = students_data.join(",")
-    file.puts data_line
+  open(filename, mode ='w') do |line|
+    @students.each {|student| line.puts([student[:name], student[:cohort]].join(","))}
   end
-  puts "Successfully saved data to #{filename}"
+  puts "Successfully saved #{@students.count} students data to #{filename}"
   puts
-  file.close
 end
 def add_students(name, cohort)
   if cohort.nil?
@@ -185,21 +181,21 @@ def load_students(filename = nil)
   puts "Please check that you've entered correct file name"
   filename = STDIN.gets.chomp + ".csv"
   end
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
+  open(filename, "r") do |file|
+    file.each_line do |line|
     name, cohort = line.chomp.split(',')
     add_students(name, cohort)
   end
   puts "Successfully loaded #{@students.count} from #{filename}"
-  file.close
+end
 else
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
+  open(filename, "r") do |file|
+    file.each_line do |line|
     name, cohort = line.chomp.split(',')
     add_students(name, cohort)
   end
   puts "Successfully loaded #{@students.count} from #{filename}"
-  file.close
+end
 end
 end
 def try_load_students
