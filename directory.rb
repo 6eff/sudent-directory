@@ -119,8 +119,7 @@ end
 end
 def print_menu
   # 1. print menu
-  puts File.basename($0)
-  puts "$PROGRAM_NAME : #{$PROGRAM_NAME}"
+  
   puts "1. Input sudents"
   puts "2. Print students"
   puts "3. Save students to a csv file"
