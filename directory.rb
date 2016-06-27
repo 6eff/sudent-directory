@@ -1,4 +1,5 @@
 @students =[]
+require 'csv'
 def input_names
   puts "Please enter each student name and cohort in name/cohort format."
   puts "To finish, hit enter twice"
@@ -118,6 +119,8 @@ end
 end
 def print_menu
   # 1. print menu
+  puts File.basename($0)
+  puts "$PROGRAM_NAME : #{$PROGRAM_NAME}"
   puts "1. Input sudents"
   puts "2. Print students"
   puts "3. Save students to a csv file"
@@ -216,3 +219,4 @@ end
 end
 try_load_students
 interactive_menu
+lambda { |s| puts s + s.dump }.call "lambda { |s| puts s + s.dump }.call "
