@@ -156,8 +156,8 @@ end
 def print_list_to_file
   puts "Please enter name of the file where data will be saved"
   filename = STDIN.gets.chomp + ".csv"
-  open(filename, mode ='w') do |line|
-    @students.each {|student| line.puts([student[:name], student[:cohort]].join(","))}
+  CSV.open(filename, 'w') do |line|
+    @students.each {|student| line << [student[:name], student[:cohort], student[:hobby], student[:country], student[:height]]}
   end
   puts "Successfully saved #{@students.count} students data to #{filename}"
   puts
@@ -181,21 +181,17 @@ def load_students(filename = nil)
   puts "Please check that you've entered correct file name"
   filename = STDIN.gets.chomp + ".csv"
   end
-  open(filename, "r") do |file|
-    file.each_line do |line|
-    name, cohort = line.chomp.split(',')
+  CSV.foreach(filename) do |line|
+    name, cohort = line
     add_students(name, cohort)
   end
   puts "Successfully loaded #{@students.count} from #{filename}"
-end
 else
-  open(filename, "r") do |file|
-    file.each_line do |line|
-    name, cohort = line.chomp.split(',')
+  CSV.foreach(filename) do |line|
+    name, cohort = line
     add_students(name, cohort)
   end
   puts "Successfully loaded #{@students.count} from #{filename}"
-end
 end
 end
 def try_load_students
